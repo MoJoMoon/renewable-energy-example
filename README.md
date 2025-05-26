@@ -8,7 +8,7 @@ A comprehensive interactive learning platform covering tidal, wind, solar, and h
 ### **Course Access Options**
 
 #### **Complete Course (Recommended)**
-**🎓 Full Training Program:** [https://mojomoon.github.io/renewable-energy-example](https://mojomoon.github.io/renewable-energy-example)
+**🎓 Full Training Program:** 
 - All renewable energy modules
 - Integrated progress tracking
 - Comprehensive assessments
