@@ -107,6 +107,9 @@
             background: radial-gradient(circle at center, #001122 0%, #000811 100%);
             display: block;
             margin: 20px auto;
+            min-height: 400px;
+            width: 100%;
+            max-width: 800px;
         }
 
         .controls {
@@ -243,7 +246,7 @@
             <h2>🌊 Interactive Tidal Force Simulation</h2>
             <p>Watch how the Moon's gravity creates two tidal bulges on Earth, leading to predictable energy cycles:</p>
             
-            <canvas id="simulationCanvas" width="800" height="600"></canvas>
+            <canvas id="simulationCanvas" width="800" height="600" style="background: radial-gradient(circle at center, #001122 0%, #000811 100%);"></canvas>
             
             <div class="controls">
                 <button class="demo-button" id="playBtn">▶️ Play</button>
@@ -397,8 +400,21 @@
         // Tidal Simulation Class
         class TidalSimulation {
             constructor() {
+                console.log('Initializing TidalSimulation...');
+                
                 this.canvas = document.getElementById('simulationCanvas');
+                if (!this.canvas) {
+                    console.error('Canvas not found!');
+                    return;
+                }
+                
                 this.ctx = this.canvas.getContext('2d');
+                if (!this.ctx) {
+                    console.error('Canvas context not available!');
+                    return;
+                }
+                
+                console.log('Canvas and context ready');
                 
                 // Animation state
                 this.isPlaying = false;
@@ -412,6 +428,10 @@
                 this.moonDistance = 280;
                 this.moonRadius = 25;
                 this.bulgeSize = 20;
+                
+                // Ensure canvas has proper dimensions
+                this.canvas.width = 800;
+                this.canvas.height = 600;
                 
                 this.initializeControls();
                 this.draw();
@@ -485,13 +505,20 @@
             }
             
             draw() {
+                if (!this.ctx || !this.canvas) {
+                    console.error('Cannot draw: canvas or context not available');
+                    return;
+                }
+                
                 const w = this.canvas.width;
                 const h = this.canvas.height;
                 const centerX = w / 2;
                 const centerY = h / 2;
                 
-                // Clear canvas
-                this.ctx.clearRect(0, 0, w, h);
+                // Clear canvas with dark background
+                this.ctx.fillStyle = '#000811';
+                this.ctx.fillRect(0, 0, w, h);
+                
                 this.ctx.save();
                 this.ctx.translate(centerX, centerY);
                 
@@ -712,7 +739,49 @@
         let simulation;
         window.addEventListener('load', function() {
             console.log('Page loaded, initializing simulation...');
-            simulation = new TidalSimulation();
+            
+            // Add a small delay to ensure everything is ready
+            setTimeout(() => {
+                const canvas = document.getElementById('simulationCanvas');
+                console.log('Canvas element found:', canvas !== null);
+                console.log('Canvas dimensions:', canvas ? `${canvas.width}x${canvas.height}` : 'N/A');
+                
+                if (canvas) {
+                    // Ensure canvas has proper dimensions
+                    canvas.width = 800;
+                    canvas.height = 600;
+                    
+                    // Test canvas context
+                    const ctx = canvas.getContext('2d');
+                    console.log('Canvas context:', ctx !== null);
+                    
+                    if (ctx) {
+                        // Draw a simple test to verify canvas is working
+                        ctx.fillStyle = '#4a90e2';
+                        ctx.fillRect(10, 10, 50, 50);
+                        console.log('Test square drawn successfully');
+                        
+                        // Initialize the simulation
+                        try {
+                            simulation = new TidalSimulation();
+                            console.log('Simulation initialized successfully');
+                        } catch (error) {
+                            console.error('Error initializing simulation:', error);
+                            
+                            // Fallback: show error message on canvas
+                            ctx.fillStyle = 'white';
+                            ctx.font = '20px Arial';
+                            ctx.textAlign = 'center';
+                            ctx.fillText('Simulation Loading...', canvas.width/2, canvas.height/2);
+                            ctx.fillText('Click Play to Start', canvas.width/2, canvas.height/2 + 30);
+                        }
+                    } else {
+                        console.error('Could not get canvas context');
+                    }
+                } else {
+                    console.error('Canvas element not found');
+                }
+            }, 500);
         });
 
         // Handle window resize
