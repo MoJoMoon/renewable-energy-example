@@ -3,10 +3,10 @@
 Example Renewable Energy Self Paced Course
 A comprehensive interactive learning platform covering tidal, wind, solar, and hydroelectric energy systems.
 
-# Live Course 🌐
+## Live Course 🌐
 Access the course here: https://mojomoon.github.io/renewable-energy-example/
 
-# Course Overview 📚
+## Course Overview 📚
 This self-paced course provides comprehensive training on renewable energy technologies through:
 
 Interactive physics simulations
@@ -15,8 +15,8 @@ Hands-on energy calculations
 Knowledge assessments
 Offline capability
 
-🎯 Learning Modules
-1. 🌊 Tidal Energy
+## Learning Modules 🎯
+###1. 🌊 Tidal Energy
 
 Physics of tidal forces
 Interactive Moon-Earth simulation
