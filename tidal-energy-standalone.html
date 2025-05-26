@@ -196,6 +196,31 @@
             text-align: center;
         }
 
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px 0;
+        }
+
+        .quiz-option:hover {
+            background: rgba(74, 144, 226, 0.2);
+            border-color: #4a90e2;
+        }
+
+        .quiz-option.correct {
+            background: rgba(46, 204, 113, 0.5);
+            border-color: #2ecc71;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(231, 76, 60, 0.5);
+            border-color: #e74c3c;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -375,10 +400,41 @@
 
         <!-- Summary -->
         <div class="content-section">
-            <h2 class="section-title">🎓 Key Takeaways</h2>
+            <h2 class="section-title">✅ Knowledge Assessment</h2>
             
+            <div style="background: rgba(226, 74, 144, 0.1); border: 2px solid rgba(226, 74, 144, 0.5); border-radius: 15px; padding: 25px; margin: 20px 0;">
+                <div style="font-size: 1.2em; margin-bottom: 15px; color: #87ceeb; font-weight: bold;">1. What causes the two daily high tides on Earth?</div>
+                <div style="display: grid; gap: 10px; margin: 15px 0;">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Earth's rotation speed variations</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">B) Solar heating of the oceans</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">C) Two tidal bulges caused by Moon's gravity and centrifugal force</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) Underwater volcanic activity</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(226, 74, 144, 0.1); border: 2px solid rgba(226, 74, 144, 0.5); border-radius: 15px; padding: 25px; margin: 20px 0;">
+                <div style="font-size: 1.2em; margin-bottom: 15px; color: #87ceeb; font-weight: bold;">2. The main advantage of tidal energy over wind and solar is:</div>
+                <div style="display: grid; gap: 10px; margin: 15px 0;">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Lower installation costs</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">B) Predictable and reliable generation</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">C) Higher energy density</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) No environmental impact</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(226, 74, 144, 0.1); border: 2px solid rgba(226, 74, 144, 0.5); border-radius: 15px; padding: 25px; margin: 20px 0;">
+                <div style="font-size: 1.2em; margin-bottom: 15px; color: #87ceeb; font-weight: bold;">3. Which tidal energy technology has the lowest environmental impact?</div>
+                <div style="display: grid; gap: 10px; margin: 15px 0;">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Tidal barrages</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">B) Tidal stream generators</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">C) Tidal lagoons</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) All have equal impact</div>
+                </div>
+            </div>
+
             <div class="highlight-box">
-                <h3>Essential Concepts</h3>
+                <h3>🎓 Lesson Summary</h3>
+                <p>You've completed the comprehensive tidal energy training module! Key takeaways:</p>
                 <ul style="text-align: left; display: inline-block;">
                     <li>Tidal forces result from gravitational interactions between Earth, Moon, and Sun</li>
                     <li>Two tidal bulges create approximately two high tides per day</li>
@@ -386,6 +442,19 @@
                     <li>Predictability makes tidal energy uniquely valuable among renewables</li>
                     <li>AI tools can accelerate learning and professional development</li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="content-section">
+            <h2 class="section-title">🎓 Course Completion</h2>
+            
+            <div class="highlight-box">
+                <h3>🏆 Congratulations!</h3>
+                <p>You have successfully completed the comprehensive tidal energy lesson. You now understand the physics, technology, and applications of tidal energy systems.</p>
+                <div style="margin: 20px 0;">
+                    <strong>Score:</strong> <span id="quizScore">Complete the assessment above</span>
+                </div>
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
@@ -733,6 +802,68 @@
             } else {
                 alert('AI Prompt:\n\n' + prompt);
             }
+        }
+
+        // Quiz functionality
+        let quizAnswers = {};
+        let questionsAnswered = 0;
+        const totalQuestions = 3;
+
+        function selectAnswer(element, isCorrect) {
+            // Prevent re-selection
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+            
+            // Find the question container
+            const questionContainer = element.closest('div[style*="background: rgba(226, 74, 144, 0.1)"]');
+            const questionNumber = questionContainer.querySelector('div[style*="font-size: 1.2em"]').textContent.charAt(0);
+            
+            // Disable all options in this question
+            const allOptions = questionContainer.querySelectorAll('.quiz-option');
+            allOptions.forEach(option => {
+                if (option === element) {
+                    option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                } else {
+                    option.style.opacity = '0.5';
+                    option.style.pointerEvents = 'none';
+                }
+            });
+            
+            // Track answer if not already answered
+            if (!quizAnswers[questionNumber]) {
+                questionsAnswered++;
+                quizAnswers[questionNumber] = isCorrect;
+                
+                // Check if all questions answered
+                if (questionsAnswered === totalQuestions) {
+                    updateQuizScore();
+                }
+            }
+        }
+
+        function updateQuizScore() {
+            const correctAnswers = Object.values(quizAnswers).filter(answer => answer).length;
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            let message = `${correctAnswers}/${totalQuestions} correct (${percentage}%)`;
+            let emoji = '📊';
+            
+            if (percentage >= 90) {
+                message += ' - Excellent! 🌟';
+                emoji = '🌟';
+            } else if (percentage >= 70) {
+                message += ' - Good work! 👍';
+                emoji = '👍';
+            } else if (percentage >= 50) {
+                message += ' - Room for improvement 📚';
+                emoji = '📚';
+            } else {
+                message += ' - Review the material 🔄';
+                emoji = '🔄';
+            }
+            
+            document.getElementById('quizScore').textContent = `${emoji} ${message}`;
         }
 
         // Initialize simulation when page loads
