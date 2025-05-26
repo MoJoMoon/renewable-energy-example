@@ -67,122 +67,6 @@
             margin-bottom: 15px;
         }
 
-        .lesson-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: linear-gradient(45deg, #2d6da3, #4a90e2);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-        }
-
-        .nav-btn.active {
-            background: linear-gradient(45deg, #e24a90, #eb87ce);
-            box-shadow: 0 4px 15px rgba(226, 74, 144, 0.4);
-        }
-
-        .lesson-section {
-            display: none;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(135, 206, 235, 0.3);
-        }
-
-        .lesson-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            color: #87ceeb;
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin: 20px 0;
-        }
-
-        .content-card {
-            background: rgba(45, 109, 163, 0.2);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #4a90e2;
-            transition: transform 0.3s ease;
-        }
-
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .content-card h3 {
-            color: #87ceeb;
-            margin-top: 0;
-            font-size: 1.3em;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(226, 74, 144, 0.2), rgba(235, 135, 206, 0.2));
-            border: 2px solid rgba(226, 74, 144, 0.5);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .ai-highlight {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(135, 206, 235, 0.2));
-            border: 2px solid rgba(74, 144, 226, 0.5);
-        }
-
-        .simulation-embed {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            border: 2px solid #4a90e2;
-        }
-
-        .simulation-embed canvas {
-            border: 2px solid #4a90e2;
-            border-radius: 10px;
-            background: radial-gradient(circle at center, #001122 0%, #000811 100%);
-            display: block;
-            margin: 15px auto;
-            max-width: 100%;
-            height: auto;
-        }
-
         .demo-button {
             background: linear-gradient(45deg, #4a90e2, #87ceeb);
             color: white;
@@ -202,34 +86,57 @@
             box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
         }
 
-        .demo-controls {
+        .simulation-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            border: 2px solid #4a90e2;
+        }
+
+        .simulation-container h2 {
+            color: #87ceeb;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        #simulationCanvas {
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            background: radial-gradient(circle at center, #001122 0%, #000811 100%);
+            display: block;
+            margin: 20px auto;
+        }
+
+        .controls {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 15px 0;
+            margin: 20px 0;
             flex-wrap: wrap;
             align-items: center;
         }
 
-        .demo-controls input[type="range"] {
+        .controls input[type="range"] {
             margin: 0 10px;
         }
 
-        .tide-indicator {
+        .tide-status {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 15px 0;
+            gap: 30px;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
 
         .tide-box {
             background: rgba(0, 0, 0, 0.5);
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 15px 20px;
+            border-radius: 10px;
             border: 2px solid;
             text-align: center;
-            min-width: 120px;
+            min-width: 150px;
         }
 
         .high-tide {
@@ -242,79 +149,48 @@
             color: #eb87ce;
         }
 
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            height: 8px;
+        .content-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+
+        .section-title {
+            color: #87ceeb;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
             margin: 20px 0;
-            overflow: hidden;
         }
 
-        .progress-fill {
-            background: linear-gradient(90deg, #4a90e2, #87ceeb);
-            height: 100%;
-            transition: width 0.3s ease;
-            border-radius: 10px;
+        .content-card {
+            background: rgba(45, 109, 163, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4a90e2;
         }
 
-        .prompt-box {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            text-align: left;
-            font-family: monospace;
-            font-size: 0.9em;
+        .content-card h3 {
+            color: #87ceeb;
+            margin-top: 0;
+            font-size: 1.3em;
         }
 
-        .interactive-demo {
-            background: rgba(0, 0, 0, 0.4);
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(226, 74, 144, 0.2), rgba(235, 135, 206, 0.2));
+            border: 2px solid rgba(226, 74, 144, 0.5);
             border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
             text-align: center;
-        }
-
-        .quiz-container {
-            background: rgba(226, 74, 144, 0.1);
-            border: 2px solid rgba(226, 74, 144, 0.5);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-        }
-
-        .quiz-question {
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            color: #87ceeb;
-        }
-
-        .quiz-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(135, 206, 235, 0.3);
-            border-radius: 8px;
-            padding: 12px;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
-
-        .quiz-option:hover {
-            background: rgba(74, 144, 226, 0.2);
-            border-color: #4a90e2;
-        }
-
-        .case-study {
-            background: rgba(45, 109, 163, 0.3);
-            border: 2px solid #4a90e2;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-        }
-
-        .case-study h4 {
-            color: #87ceeb;
-            margin-top: 0;
         }
 
         @media (max-width: 768px) {
@@ -322,12 +198,12 @@
                 font-size: 2em;
             }
             
-            .lesson-nav {
-                gap: 8px;
+            .controls {
+                gap: 10px;
             }
             
-            .nav-btn {
-                padding: 8px 15px;
+            .demo-button {
+                padding: 10px 18px;
                 font-size: 14px;
             }
             
@@ -335,19 +211,17 @@
                 grid-template-columns: 1fr;
             }
             
-            .demo-controls {
-                gap: 10px;
-            }
-            
-            .simulation-embed canvas {
+            #simulationCanvas {
                 width: 100%;
                 max-width: 600px;
+                height: auto;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Navigation Header -->
         <div class="navigation-header">
             <p>📚 This detailed lesson is part of the <a href="index.html">Complete Renewable Energy Course</a></p>
             <div>
@@ -357,52 +231,44 @@
             </div>
         </div>
 
+        <!-- Course Header -->
         <div class="header">
             <h1>🌙 Tidal Energy: From Physics to Power</h1>
             <div class="subtitle">Understanding Tidal Forces for Clean Energy Generation</div>
             <p style="margin-top: 15px; color: #b8c6db;">🤖 <em>Enhanced with AI-powered learning activities</em></p>
         </div>
 
-        <div class="lesson-nav">
-            <button class="nav-btn active" onclick="showSection('physics')">1. Physics Fundamentals</button>
-            <button class="nav-btn" onclick="showSection('technology')">2. Technology Overview</button>
-            <button class="nav-btn" onclick="showSection('calculation')">3. Energy Calculations</button>
-            <button class="nav-btn" onclick="showSection('applications')">4. Real-World Applications</button>
-            <button class="nav-btn" onclick="showSection('assessment')">5. Knowledge Check</button>
-            <button class="nav-btn" onclick="showSection('ai-activities')">6. AI Learning</button>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 16.6%"></div>
-        </div>
-
-        <!-- Section 1: Physics Fundamentals -->
-        <div id="physics" class="lesson-section active">
-            <h2 class="section-title">🌙 Understanding Tidal Physics</h2>
+        <!-- Tidal Simulation -->
+        <div class="simulation-container">
+            <h2>🌊 Interactive Tidal Force Simulation</h2>
+            <p>Watch how the Moon's gravity creates two tidal bulges on Earth, leading to predictable energy cycles:</p>
             
-            <div class="simulation-embed">
-                <h3>Interactive Tidal Force Simulation</h3>
-                <p>This simulation demonstrates the fundamental physics behind tidal energy. Watch how the Moon's gravity creates tidal bulges:</p>
-                <canvas id="tidalSimCanvas" width="700" height="500"></canvas>
-                <div class="demo-controls">
-                    <button class="demo-button" id="simPlayPause">▶️ Play</button>
-                    <button class="demo-button" id="simReset">🔄 Reset</button>
-                    <button class="demo-button" id="simToggleView">🔬 Detail View</button>
-                    <input type="range" id="simSpeed" min="0.1" max="3" value="1" step="0.1">
-                    <span id="simSpeedLabel">1x</span>
-                </div>
-                <div class="tide-indicator">
-                    <div class="tide-box high-tide">
-                        <strong>High Tide:</strong><br>
-                        <span id="highTideStatus">🌊 Moon overhead</span>
-                    </div>
-                    <div class="tide-box low-tide">
-                        <strong>Low Tide:</strong><br>
-                        <span id="lowTideStatus">🏖️ Moon at horizon</span>
-                    </div>
-                </div>
+            <canvas id="simulationCanvas" width="800" height="600"></canvas>
+            
+            <div class="controls">
+                <button class="demo-button" id="playBtn">▶️ Play</button>
+                <button class="demo-button" id="resetBtn">🔄 Reset</button>
+                <button class="demo-button" id="detailBtn">🔬 Detail View</button>
+                <input type="range" id="speedSlider" min="0.1" max="3" value="1" step="0.1">
+                <span id="speedDisplay">1x</span>
             </div>
 
+            <div class="tide-status">
+                <div class="tide-box high-tide">
+                    <strong>High Tide</strong><br>
+                    <span id="highTideText">🌊 Moon overhead</span>
+                </div>
+                <div class="tide-box low-tide">
+                    <strong>Low Tide</strong><br>
+                    <span id="lowTideText">🏖️ Moon at horizon</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physics Content -->
+        <div class="content-section">
+            <h2 class="section-title">🌙 Understanding Tidal Physics</h2>
+            
             <div class="content-grid">
                 <div class="content-card">
                     <h3>🎯 Gravitational Forces</h3>
@@ -441,27 +307,25 @@
                 </div>
             </div>
 
-            <div class="highlight-box ai-highlight">
-                <h3>🤖 AI Learning Activity: Tidal Physics Tutor</h3>
-                <p>Practice explaining tidal physics concepts by role-playing with an AI tutor. Try these scenarios:</p>
-                <div style="text-align: left; margin: 15px 0;">
-                    <p><strong>Scenario 1:</strong> "I'm an AI playing a confused student. Explain why we get TWO high tides per day, not just one."</p>
-                    <p><strong>Scenario 2:</strong> "I'm an AI engineering manager. Convince me that tidal energy is more predictable than wind power."</p>
-                    <p><strong>Scenario 3:</strong> "I'm an AI representing local fishermen. Address my concerns about tidal energy installations."</p>
-                </div>
-                <button class="demo-button" onclick="showAIPrompts('tidal-physics')">📝 View AI Conversation Starters</button>
-            </div>
-
             <div class="highlight-box">
                 <h3>💡 Energy Harvesting Principle</h3>
                 <p>Tidal energy systems capture the kinetic energy of moving water during tidal flow. The predictable nature of tides makes this a reliable renewable energy source, unlike wind or solar power.</p>
             </div>
+
+            <div class="highlight-box" style="background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(135, 206, 235, 0.2)); border-color: #4a90e2;">
+                <h3>🤖 AI Learning Activity</h3>
+                <p>Use this prompt with ChatGPT or Claude to explore tidal physics:</p>
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; font-family: monospace; font-size: 0.9em;">
+                    "I'm an AI playing a confused student. Explain why we get TWO high tides per day, not just one. Use the simulation we just watched as a reference, and help me understand the dual bulge system."
+                </div>
+                <button class="demo-button" onclick="copyAIPrompt()">📋 Copy AI Prompt</button>
+            </div>
         </div>
 
-        <!-- Section 2: Technology Overview -->
-        <div id="technology" class="lesson-section">
+        <!-- Technology Section -->
+        <div class="content-section">
             <h2 class="section-title">⚙️ Tidal Energy Technologies</h2>
-
+            
             <div class="content-grid">
                 <div class="content-card">
                     <h3>🌊 Tidal Stream Generators</h3>
@@ -497,154 +361,372 @@
                 </div>
 
                 <div class="content-card">
-                    <h3>📊 Performance Comparison</h3>
-                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
-                        <tr style="background: rgba(74, 144, 226, 0.3);">
-                            <th style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3); color: #87ceeb;">Technology</th>
-                            <th style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3); color: #87ceeb;">Capacity Factor</th>
-                            <th style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3); color: #87ceeb;">Environmental Impact</th>
-                        </tr>
-                        <tr>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">Tidal Stream</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">25-35%</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">Low</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">Tidal Barrage</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">22-35%</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">High</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">Tidal Lagoon</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">15-25%</td>
-                            <td style="padding: 8px; border: 1px solid rgba(135, 206, 235, 0.3);">Medium</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="highlight-box ai-highlight">
-                <h3>🤖 AI Learning Activity: Technology Comparison</h3>
-                <p>Use AI to analyze tidal technologies for specific scenarios:</p>
-                <div class="prompt-box">
-                    "I'm evaluating tidal energy options for the Severn Estuary (UK). Compare tidal barrages vs tidal lagoons for this 14-meter tidal range location. Include environmental impact, energy output, cost analysis, and stakeholder concerns. Then role-play as a local fisherman expressing concerns about the project."
-                </div>
-                <button class="demo-button" onclick="copyToClipboard('tech-comparison')">📋 Copy AI Prompt</button>
-            </div>
-        </div>
-
-        <!-- Section 3: Energy Calculations -->
-        <div id="calculation" class="lesson-section">
-            <h2 class="section-title">📊 Energy Calculations & Economics</h2>
-
-            <div class="interactive-demo">
-                <h3>⚡ Tidal Energy Calculator</h3>
-                <p>Calculate potential energy generation from tidal parameters:</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                    <div>
-                        <label style="display: block; margin-bottom: 5px;">Tidal Range (meters):</label>
-                        <input type="number" id="tidalRange" value="4" min="1" max="15" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #4a90e2; background: rgba(255,255,255,0.1); color: white;" onchange="calculateTidalEnergy()">
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; margin-bottom: 5px;">Basin Area (km²):</label>
-                        <input type="number" id="basinArea" value="10" min="1" max="1000" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #4a90e2; background: rgba(255,255,255,0.1); color: white;" onchange="calculateTidalEnergy()">
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; margin-bottom: 5px;">System Efficiency (%):</label>
-                        <input type="number" id="efficiency" value="30" min="10" max="90" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #4a90e2; background: rgba(255,255,255,0.1); color: white;" onchange="calculateTidalEnergy()">
-                    </div>
-                </div>
-                
-                <div style="background: rgba(135, 206, 235, 0.2); border-radius: 8px; padding: 15px; margin: 15px 0; text-align: center; font-size: 1.1em; font-weight: bold;">
-                    <div>Potential Energy per Cycle: <span id="energyPerCycle">0</span> MWh</div>
-                    <div>Daily Energy Generation: <span id="dailyEnergy">0</span> MWh</div>
-                    <div>Annual Energy Generation: <span id="annualEnergy">0</span> GWh</div>
-                    <div>Equivalent Homes Powered: <span id="homesPowered">0</span></div>
-                </div>
-            </div>
-
-            <div class="highlight-box ai-highlight">
-                <h3>🤖 AI Learning Activity: Advanced Calculations</h3>
-                <p>Use AI to perform complex energy system analysis beyond basic calculations:</p>
-                <div class="prompt-box">
-                    "Help me create a Monte Carlo simulation for tidal energy output. Use these parameters: Bay of Fundy location, tidal range varying 9-13m seasonally, system efficiency 25-35% with maintenance cycles. Include climate change effects (1cm sea level rise per decade) and calculate 25-year NPV with 6% discount rate. Present results with confidence intervals."
-                </div>
-                <button class="demo-button" onclick="copyToClipboard('advanced-calc')">📋 Copy AI Prompt</button>
-                <p style="font-size: 0.9em; margin-top: 10px; color: #b8c6db;">💡 Try this with ChatGPT Advanced Data Analysis or Claude with analysis tools</p>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-card">
-                    <h3>🧮 Key Formulas</h3>
-                    <p><strong>Potential Energy:</strong></p>
-                    <p>E = ½ × ρ × g × A × R²</p>
-                    <p>Where:</p>
-                    <ul>
-                        <li>ρ = water density (1025 kg/m³)</li>
-                        <li>g = gravity (9.81 m/s²)</li>
-                        <li>A = basin area (m²)</li>
-                        <li>R = tidal range (m)</li>
-                    </ul>
-                </div>
-
-                <div class="content-card">
-                    <h3>💰 Economic Factors</h3>
-                    <ul>
-                        <li><strong>CAPEX:</strong> $3-8M per MW installed</li>
-                        <li><strong>OPEX:</strong> 2-4% of CAPEX annually</li>
-                        <li><strong>Lifespan:</strong> 25-30 years</li>
-                        <li><strong>LCOE:</strong> $100-300 per MWh</li>
-                    </ul>
+                    <h3>📊 Real-World Examples</h3>
+                    <p><strong>La Rance, France:</strong> 240 MW tidal barrage (1966)</p>
+                    <p><strong>MeyGen, Scotland:</strong> 6 MW tidal stream array</p>
+                    <p><strong>Sihwa Lake, Korea:</strong> 254 MW tidal power station</p>
+                    <p>These projects demonstrate both the potential and challenges of tidal energy.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Section 4: Real-World Applications -->
-        <div id="applications" class="lesson-section">
-            <h2 class="section-title">🏭 Real-World Applications</h2>
-
-            <div class="case-study">
-                <h4>🇫🇷 La Rance Tidal Power Station, France</h4>
-                <p><strong>Specifications:</strong></p>
-                <ul>
-                    <li>Capacity: 240 MW</li>
-                    <li>Annual Generation: 600 GWh</li>
-                    <li>Operational since: 1966</li>
-                    <li>Technology: Tidal barrage</li>
+        <!-- Summary -->
+        <div class="content-section">
+            <h2 class="section-title">🎓 Key Takeaways</h2>
+            
+            <div class="highlight-box">
+                <h3>Essential Concepts</h3>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Tidal forces result from gravitational interactions between Earth, Moon, and Sun</li>
+                    <li>Two tidal bulges create approximately two high tides per day</li>
+                    <li>Multiple technologies exist: stream turbines, barrages, and lagoons</li>
+                    <li>Predictability makes tidal energy uniquely valuable among renewables</li>
+                    <li>AI tools can accelerate learning and professional development</li>
                 </ul>
-                <p><strong>Key Lessons:</strong> Demonstrates long-term viability of tidal energy, though environmental concerns limit replication of this design.</p>
             </div>
 
-            <div class="case-study">
-                <h4>🏴󠁧󠁢󠁳󠁣󠁴󠁿 MeyGen Project, Scotland</h4>
-                <p><strong>Specifications:</strong></p>
-                <ul>
-                    <li>Phase 1A: 6 MW (operational)</li>
-                    <li>Full project: 398 MW planned</li>
-                    <li>Technology: Tidal stream turbines</li>
-                    <li>Location: Pentland Firth</li>
-                </ul>
-                <p><strong>Key Lessons:</strong> Shows scalability of tidal stream technology and importance of proper site selection.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="index.html" class="demo-button" style="font-size: 1.2em; padding: 15px 30px;">
+                    🏠 Return to Complete Course
+                </a>
             </div>
         </div>
+    </div>
 
-        <!-- Section 5: Knowledge Check -->
-        <div id="assessment" class="lesson-section">
-            <h2 class="section-title">✅ Knowledge Assessment</h2>
+    <script>
+        // Tidal Simulation Class
+        class TidalSimulation {
+            constructor() {
+                this.canvas = document.getElementById('simulationCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Animation state
+                this.isPlaying = false;
+                this.animationId = null;
+                this.speed = 1;
+                this.time = 0;
+                this.showDetails = false;
+                
+                // Simulation parameters
+                this.earthRadius = 80;
+                this.moonDistance = 280;
+                this.moonRadius = 25;
+                this.bulgeSize = 20;
+                
+                this.initializeControls();
+                this.draw();
+                
+                console.log('Tidal simulation initialized successfully');
+            }
+            
+            initializeControls() {
+                // Play button
+                document.getElementById('playBtn').onclick = () => {
+                    if (this.isPlaying) {
+                        this.pause();
+                    } else {
+                        this.play();
+                    }
+                };
+                
+                // Reset button
+                document.getElementById('resetBtn').onclick = () => {
+                    this.reset();
+                };
+                
+                // Detail toggle
+                document.getElementById('detailBtn').onclick = () => {
+                    this.toggleDetails();
+                };
+                
+                // Speed slider
+                document.getElementById('speedSlider').oninput = (e) => {
+                    this.speed = parseFloat(e.target.value);
+                    document.getElementById('speedDisplay').textContent = `${this.speed}x`;
+                };
+            }
+            
+            play() {
+                this.isPlaying = true;
+                document.getElementById('playBtn').textContent = '⏸️ Pause';
+                this.animate();
+            }
+            
+            pause() {
+                this.isPlaying = false;
+                document.getElementById('playBtn').textContent = '▶️ Play';
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+            
+            reset() {
+                this.pause();
+                this.time = 0;
+                this.draw();
+                this.updateTideStatus();
+            }
+            
+            toggleDetails() {
+                this.showDetails = !this.showDetails;
+                document.getElementById('detailBtn').textContent = 
+                    this.showDetails ? '🌍 Simple View' : '🔬 Detail View';
+                this.draw();
+            }
+            
+            animate() {
+                if (!this.isPlaying) return;
+                
+                this.time += 0.02 * this.speed;
+                this.draw();
+                this.updateTideStatus();
+                
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+            
+            draw() {
+                const w = this.canvas.width;
+                const h = this.canvas.height;
+                const centerX = w / 2;
+                const centerY = h / 2;
+                
+                // Clear canvas
+                this.ctx.clearRect(0, 0, w, h);
+                this.ctx.save();
+                this.ctx.translate(centerX, centerY);
+                
+                // Calculate positions
+                const moonAngle = this.time * 0.3;
+                const earthRotation = this.time * 2;
+                const moonX = Math.cos(moonAngle) * this.moonDistance;
+                const moonY = Math.sin(moonAngle) * this.moonDistance;
+                
+                // Draw orbital path
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.3)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([8, 8]);
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.moonDistance, 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+                
+                // Draw Earth
+                this.drawEarth(earthRotation, moonAngle);
+                
+                // Draw Moon
+                this.drawMoon(moonX, moonY);
+                
+                // Draw force lines if in detail mode
+                if (this.showDetails) {
+                    this.drawForceLines(moonX, moonY);
+                }
+                
+                // Draw labels
+                this.drawLabels(moonX, moonY, moonAngle);
+                
+                this.ctx.restore();
+            }
+            
+            drawEarth(rotation, moonAngle) {
+                // Earth body
+                this.ctx.fillStyle = '#4a90e2';
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Continents
+                this.ctx.fillStyle = '#2d5a0d';
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI / 3) + rotation;
+                    const x = Math.cos(angle) * this.earthRadius * 0.6;
+                    const y = Math.sin(angle) * this.earthRadius * 0.6;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 12, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+                
+                // Water layer outline
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.7)';
+                this.ctx.lineWidth = 4;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius, 0, Math.PI * 2);
+                this.ctx.stroke();
+                
+                // Tidal bulges
+                this.drawTidalBulges(moonAngle);
+                
+                // Rotation indicator
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius + 8, 0, rotation % (Math.PI * 2));
+                this.ctx.stroke();
+            }
+            
+            drawTidalBulges(moonAngle) {
+                const bulgeDistance = this.earthRadius + this.bulgeSize;
+                
+                // Near bulge (toward moon)
+                const nearX = Math.cos(moonAngle) * bulgeDistance * 0.85;
+                const nearY = Math.sin(moonAngle) * bulgeDistance * 0.85;
+                
+                // Far bulge (away from moon)
+                const farX = Math.cos(moonAngle + Math.PI) * bulgeDistance * 0.85;
+                const farY = Math.sin(moonAngle + Math.PI) * bulgeDistance * 0.85;
+                
+                // Draw water bulges
+                this.ctx.fillStyle = 'rgba(135, 206, 235, 0.9)';
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 1)';
+                this.ctx.lineWidth = 2;
+                
+                // Near bulge
+                this.ctx.beginPath();
+                this.ctx.arc(nearX, nearY, 18, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                // Far bulge
+                this.ctx.beginPath();
+                this.ctx.arc(farX, farY, 18, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+            }
+            
+            drawMoon(x, y) {
+                // Moon glow
+                const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.moonRadius + 15);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                this.ctx.fillStyle = gradient;
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius + 15, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon surface
+                this.ctx.fillStyle = '#e8e8e8';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon craters
+                this.ctx.fillStyle = '#d0d0d0';
+                this.ctx.beginPath();
+                this.ctx.arc(x - 8, y - 5, 4, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(x + 6, y + 7, 3, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(x - 2, y + 8, 2, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+            
+            drawForceLines(moonX, moonY) {
+                this.ctx.strokeStyle = 'rgba(255, 255, 100, 0.7)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([6, 6]);
+                
+                // Draw force lines from moon to various points on Earth
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i * Math.PI / 6);
+                    const earthX = Math.cos(angle) * this.earthRadius;
+                    const earthY = Math.sin(angle) * this.earthRadius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(moonX, moonY);
+                    this.ctx.lineTo(earthX, earthY);
+                    this.ctx.stroke();
+                }
+                this.ctx.setLineDash([]);
+            }
+            
+            drawLabels(moonX, moonY, moonAngle) {
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = 'bold 18px sans-serif';
+                this.ctx.textAlign = 'center';
+                this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+                this.ctx.lineWidth = 3;
+                
+                // Earth label
+                this.ctx.strokeText('🌍 Earth', 0, -this.earthRadius - 50);
+                this.ctx.fillText('🌍 Earth', 0, -this.earthRadius - 50);
+                
+                // Moon label
+                this.ctx.strokeText('🌙 Moon', moonX, moonY - 40);
+                this.ctx.fillText('🌙 Moon', moonX, moonY - 40);
+                
+                // Tide labels
+                this.ctx.font = '14px sans-serif';
+                this.ctx.fillStyle = '#87ceeb';
+                
+                const highX = Math.cos(moonAngle) * (this.earthRadius + 50);
+                const highY = Math.sin(moonAngle) * (this.earthRadius + 50);
+                this.ctx.strokeText('High Tide', highX, highY);
+                this.ctx.fillText('High Tide', highX, highY);
+                
+                const lowX = Math.cos(moonAngle + Math.PI/2) * (this.earthRadius + 50);
+                const lowY = Math.sin(moonAngle + Math.PI/2) * (this.earthRadius + 50);
+                this.ctx.strokeText('Low Tide', lowX, lowY);
+                this.ctx.fillText('Low Tide', lowX, lowY);
+            }
+            
+            updateTideStatus() {
+                const phase = (this.time * 2) % (Math.PI * 2);
+                const normalizedPhase = phase / (Math.PI * 2);
+                
+                const highElement = document.getElementById('highTideText');
+                const lowElement = document.getElementById('lowTideText');
+                
+                if (normalizedPhase < 0.25 || normalizedPhase > 0.75) {
+                    highElement.textContent = '🌊 High tide now!';
+                    lowElement.textContent = '🏖️ Low tide in 6 hours';
+                } else {
+                    highElement.textContent = '🌊 High tide in 6 hours';
+                    lowElement.textContent = '🏖️ Low tide now!';
+                }
+            }
+        }
 
-            <div class="quiz-container">
-                <div class="quiz-question">1. What causes the two daily high tides on Earth?</div>
-                <div class="quiz-option" onclick="selectAnswer(this, false)">A) Earth's rotation speed variations</div>
-                <div class="quiz-option" onclick="selectAnswer(this, false)">B) Solar heating of the oceans</div>
-                <div class="quiz-option" onclick="selectAnswer(this, true)">C) Two tidal bulges caused by Moon's gravity and centrifugal force</div>
-                <div class="quiz-option" onclick="selectAnswer(this, false)">D) Underwater volcanic activity</div>
-            </div>
+        // AI Prompt function
+        function copyAIPrompt() {
+            const prompt = "I'm an AI playing a confused student. Explain why we get TWO high tides per day, not just one. Use the simulation we just watched as a reference, and help me understand the dual bulge system.";
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(prompt).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = '✅ Copied!';
+                    btn.style.background = 'linear-gradient(45deg, #28a745, #20c997)';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = 'linear-gradient(45deg, #4a90e2, #87ceeb)';
+                    }, 2000);
+                });
+            } else {
+                alert('AI Prompt:\n\n' + prompt);
+            }
+        }
 
-            <div class="quiz-container">
-                <div class="quiz-question">2. The main advantage of tidal energy over wind and solar is:</div>
-                <div class="quiz-option" onclick="selectAnswer(this, false)">A) Lower installation costs</div>
-                <div class="quiz-option" onclick="selectAnswer(this, true)">B) Predictable and reliable generation</div>
-                <div class="quiz-option" onclick="
+        // Initialize simulation when page loads
+        let simulation;
+        window.addEventListener('load', function() {
+            console.log('Page loaded, initializing simulation...');
+            simulation = new TidalSimulation();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (simulation && window.innerWidth < 768) {
+                const canvas = document.getElementById('simulationCanvas');
+                const container = canvas.parentElement;
+                const maxWidth = Math.min(container.clientWidth - 40, 800);
+                
+                canvas.width = maxWidth;
+                canvas.height = maxWidth * 0.75;
+                simulation.draw();
+            }
+        });
+    </script>
+</body>
+</html>
