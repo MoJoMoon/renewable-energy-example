@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidal Energy: From Physics to Power</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c2340 0%, #1e4a72 50%, #2d6da3 100%);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 2px solid rgba(45, 109, 163, 0.5);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #87ceeb;
+            text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #b8c6db;
+            font-style: italic;
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #2d6da3, #4a90e2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #e24a90, #eb87ce);
+            box-shadow: 0 4px 15px rgba(226, 74, 144, 0.4);
+        }
+
+        .lesson-section {
+            display: none;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+
+        .lesson-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: #87ceeb;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .content-card {
+            background: rgba(45, 109, 163, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4a90e2;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-card h3 {
+            color: #87ceeb;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(226, 74, 144, 0.2), rgba(235, 135, 206, 0.2));
+            border: 2px solid rgba(226, 74, 144, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .simulation-embed {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #4a90e2;
+        }
+
+        .energy-calculator {
+            background: rgba(74, 144, 226, 0.1);
+            border: 2px solid #4a90e2;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .calc-input {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .calc-input label {
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .calc-input input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #4a90e2;
+            border-radius: 5px;
+            padding: 8px 12px;
+            color: white;
+            width: 120px;
+        }
+
+        .calc-result {
+            background: rgba(135, 206, 235, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.3);
+        }
+
+        .comparison-table th {
+            background: rgba(74, 144, 226, 0.3);
+            color: #87ceeb;
+            font-weight: bold;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, rgba(45, 109, 163, 0.3), rgba(74, 144, 226, 0.2));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(74, 144, 226, 0.5);
+        }
+
+        .case-study h4 {
+            color: #87ceeb;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+
+        .interactive-demo {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #4a90e2, #87ceeb);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4a90e2, #87ceeb);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .quiz-container {
+            background: rgba(226, 74, 144, 0.1);
+            border: 2px solid rgba(226, 74, 144, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #87ceeb;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(74, 144, 226, 0.2);
+            border-color: #4a90e2;
+        }
+
+        .quiz-option.correct {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(231, 76, 60, 0.3);
+            border-color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .lesson-nav {
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calc-input {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 Tidal Energy: From Physics to Power</h1>
+            <div class="subtitle">Understanding Tidal Forces for Clean Energy Generation</div>
+        </div>
+
+        <div class="lesson-nav">
+            <button class="nav-btn active" onclick="showSection('physics')">1. Physics Fundamentals</button>
+            <button class="nav-btn" onclick="showSection('technology')">2. Technology Overview</button>
+            <button class="nav-btn" onclick="showSection('calculation')">3. Energy Calculations</button>
+            <button class="nav-btn" onclick="showSection('applications')">4. Real-World Applications</button>
+            <button class="nav-btn" onclick="showSection('assessment')">5. Knowledge Check</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+        </div>
+
+        <!-- Section 1: Physics Fundamentals -->
+        <div id="physics" class="lesson-section active">
+            <h2 class="section-title">🌙 Understanding Tidal Physics</h2>
+            
+            <div class="simulation-embed">
+                <h3>Interactive Tidal Simulation</h3>
+                <p>This simulation demonstrates the fundamental physics behind tidal energy. Use the controls to see how the Moon's gravity creates tidal bulges:</p>
+                <canvas id="tidalSimCanvas" width="700" height="500" style="border: 2px solid #4a90e2; border-radius: 10px; background: radial-gradient(circle at center, #001122 0%, #000811 100%); display: block; margin: 15px auto;"></canvas>
+                <div class="demo-controls">
+                    <button class="demo-button" id="simPlayPause">▶️ Play</button>
+                    <button class="demo-button" id="simReset">🔄 Reset</button>
+                    <button class="demo-button" id="simToggleView">🔬 Detail View</button>
+                    <input type="range" id="simSpeed" min="0.1" max="3" value="1" step="0.1" style="margin: 0 10px;">
+                    <span id="simSpeedLabel">1x</span>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 20px; margin: 10px 0; flex-wrap: wrap;">
+                    <div style="background: rgba(74, 144, 226, 0.2); padding: 8px 15px; border-radius: 5px; border: 1px solid #4a90e2;">
+                        <strong>High Tide:</strong> <span id="highTideStatus">🌊 Moon overhead</span>
+                    </div>
+                    <div style="background: rgba(226, 74, 144, 0.2); padding: 8px 15px; border-radius: 5px; border: 1px solid #e24a90;">
+                        <strong>Low Tide:</strong> <span id="lowTideStatus">🏖️ Moon at horizon</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🎯 Gravitational Forces</h3>
+                    <p>The Moon's gravity pulls on Earth's oceans, creating a bulge of water on the side facing the Moon. The strength of this force follows Newton's law of universal gravitation: F = G(m₁m₂)/r²</p>
+                    <p><strong>Key Point:</strong> Tidal force varies with the cube of distance, making proximity crucial for energy generation.</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>🔄 Dual Bulge System</h3>
+                    <p>Two tidal bulges exist simultaneously:</p>
+                    <ul>
+                        <li><strong>Near-side bulge:</strong> Direct gravitational pull</li>
+                        <li><strong>Far-side bulge:</strong> Centrifugal force from Earth-Moon system rotation</li>
+                    </ul>
+                    <p>This creates approximately two high tides and two low tides every 24 hours and 50 minutes.</p>
+                </div>
+
+                <div class="content-card">
+                    <h3>🌍 Earth's Rotation Effect</h3>
+                    <p>As Earth rotates beneath the tidal bulges, different coastal locations experience:</p>
+                    <ul>
+                        <li>High tide when aligned with bulges</li>
+                        <li>Low tide when perpendicular to bulges</li>
+                        <li>Tidal range varies by geographic location</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>☀️ Solar Influence</h3>
+                    <p>The Sun also creates tidal forces, though weaker than the Moon's:</p>
+                    <ul>
+                        <li><strong>Spring tides:</strong> Sun and Moon aligned (higher range)</li>
+                        <li><strong>Neap tides:</strong> Sun and Moon at 90° (lower range)</li>
+                        <li>Occurs roughly every 14 days</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>💡 Energy Harvesting Principle</h3>
+                <p>Tidal energy systems capture the kinetic energy of moving water during tidal flow. The predictable nature of tides makes this a reliable renewable energy source, unlike wind or solar power.</p>
+            </div>
+        </div>
+
+        <!-- Section 2: Technology Overview -->
+        <div id="technology" class="lesson-section">
+            <h2 class="section-title">⚙️ Tidal Energy Technologies</h2>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🌊 Tidal Stream Generators</h3>
+                    <p>Underwater turbines that capture kinetic energy from tidal currents:</p>
+                    <ul>
+                        <li>Similar to underwater wind turbines</li>
+                        <li>Installed in areas with strong tidal flows</li>
+                        <li>Typical capacity: 1-2 MW per turbine</li>
+                        <li>Can be deployed individually or in arrays</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🏗️ Tidal Barrages</h3>
+                    <p>Dam-like structures across tidal estuaries:</p>
+                    <ul>
+                        <li>Capture potential energy from tidal height differences</li>
+                        <li>Generate power during both flood and ebb tides</li>
+                        <li>Large-scale installations (100+ MW)</li>
+                        <li>Higher environmental impact</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🌀 Tidal Lagoons</h3>
+                    <p>Artificial enclosed areas that fill and empty with tides:</p>
+                    <ul>
+                        <li>Lower environmental impact than barrages</li>
+                        <li>Predictable power generation schedule</li>
+                        <li>Can be designed for multiple purposes</li>
+                        <li>Emerging technology with high potential</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>📊 Performance Comparison</h3>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Technology</th>
+                            <th>Capacity Factor</th>
+                            <th>Environmental Impact</th>
+                            <th>Cost ($/MWh)</th>
+                        </tr>
+                        <tr>
+                            <td>Tidal Stream</td>
+                            <td>25-35%</td>
+                            <td>Low</td>
+                            <td>$150-300</td>
+                        </tr>
+                        <tr>
+                            <td>Tidal Barrage</td>
+                            <td>22-35%</td>
+                            <td>High</td>
+                            <td>$100-200</td>
+                        </tr>
+                        <tr>
+                            <td>Tidal Lagoon</td>
+                            <td>15-25%</td>
+                            <td>Medium</td>
+                            <td>$120-250</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔧 Technology Selector</h3>
+                <p>Choose optimal tidal technology based on site conditions:</p>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="showTechRecommendation('strong-current')">Strong Current Site</button>
+                    <button class="demo-button" onclick="showTechRecommendation('large-tidal-range')">Large Tidal Range</button>
+                    <button class="demo-button" onclick="showTechRecommendation('moderate-conditions')">Moderate Conditions</button>
+                </div>
+                <div id="techRecommendation" style="margin: 15px 0; padding: 15px; background: rgba(74, 144, 226, 0.2); border-radius: 8px; display: none;">
+                    <p id="recommendationText"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Energy Calculations -->
+        <div id="calculation" class="lesson-section">
+            <h2 class="section-title">📊 Energy Calculations & Economics</h2>
+
+            <div class="energy-calculator">
+                <h3>⚡ Tidal Energy Calculator</h3>
+                <p>Calculate potential energy generation from tidal parameters:</p>
+                
+                <div class="calc-input">
+                    <label>Tidal Range (meters):</label>
+                    <input type="number" id="tidalRange" value="4" min="1" max="15" onchange="calculateTidalEnergy()">
+                </div>
+                
+                <div class="calc-input">
+                    <label>Basin Area (km²):</label>
+                    <input type="number" id="basinArea" value="10" min="1" max="1000" onchange="calculateTidalEnergy()">
+                </div>
+                
+                <div class="calc-input">
+                    <label>System Efficiency (%):</label>
+                    <input type="number" id="efficiency" value="30" min="10" max="90" onchange="calculateTidalEnergy()">
+                </div>
+                
+                <div class="calc-result" id="energyResult">
+                    <div>Potential Energy per Cycle: <span id="energyPerCycle">0</span> MWh</div>
+                    <div>Daily Energy Generation: <span id="dailyEnergy">0</span> MWh</div>
+                    <div>Annual Energy Generation: <span id="annualEnergy">0</span> GWh</div>
+                    <div>Equivalent Homes Powered: <span id="homesPowered">0</span></div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🧮 Key Formulas</h3>
+                    <p><strong>Potential Energy:</strong></p>
+                    <p>E = ½ × ρ × g × A × R²</p>
+                    <p>Where:</p>
+                    <ul>
+                        <li>ρ = water density (1025 kg/m³)</li>
+                        <li>g = gravity (9.81 m/s²)</li>
+                        <li>A = basin area (m²)</li>
+                        <li>R = tidal range (m)</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>💰 Economic Factors</h3>
+                    <ul>
+                        <li><strong>CAPEX:</strong> $3-8M per MW installed</li>
+                        <li><strong>OPEX:</strong> 2-4% of CAPEX annually</li>
+                        <li><strong>Lifespan:</strong> 25-30 years</li>
+                        <li><strong>LCOE:</strong> $100-300 per MWh</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🌍 Global Potential</h3>
+                    <ul>
+                        <li><strong>Total theoretical:</strong> ~1,200 TWh/year</li>
+                        <li><strong>Technically feasible:</strong> ~120 TWh/year</li>
+                        <li><strong>Economically viable:</strong> ~25 TWh/year</li>
+                        <li><strong>Current capacity:</strong> ~0.5 GW</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>📈 Market Projections</h3>
+                    <ul>
+                        <li><strong>2025 Target:</strong> 2 GW global capacity</li>
+                        <li><strong>2030 Target:</strong> 10 GW global capacity</li>
+                        <li><strong>Cost reduction:</strong> 30-50% by 2030</li>
+                        <li><strong>Market value:</strong> $15B by 2030</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Real-World Applications -->
+        <div id="applications" class="lesson-section">
+            <h2 class="section-title">🏭 Real-World Applications</h2>
+
+            <div class="case-study">
+                <h4>🇫🇷 La Rance Tidal Power Station, France</h4>
+                <p><strong>Specifications:</strong></p>
+                <ul>
+                    <li>Capacity: 240 MW</li>
+                    <li>Annual Generation: 600 GWh</li>
+                    <li>Operational since: 1966</li>
+                    <li>Technology: Tidal barrage</li>
+                </ul>
+                <p><strong>Key Lessons:</strong> Demonstrates long-term viability of tidal energy, though environmental concerns limit replication of this design.</p>
+            </div>
+
+            <div class="case-study">
+                <h4>🏴󠁧󠁢󠁳󠁣󠁴󠁿 MeyGen Project, Scotland</h4>
+                <p><strong>Specifications:</strong></p>
+                <ul>
+                    <li>Phase 1A: 6 MW (operational)</li>
+                    <li>Full project: 398 MW planned</li>
+                    <li>Technology: Tidal stream turbines</li>
+                    <li>Location: Pentland Firth</li>
+                </ul>
+                <p><strong>Key Lessons:</strong> Shows scalability of tidal stream technology and importance of proper site selection.</p>
+            </div>
+
+            <div class="case-study">
+                <h4>🇰🇷 Sihwa Lake Tidal Power Station, South Korea</h4>
+                <p><strong>Specifications:</strong></p>
+                <ul>
+                    <li>Capacity: 254 MW</li>
+                    <li>Annual Generation: 552 GWh</li>
+                    <li>Technology: Tidal barrage</li>
+                    <li>Unique feature: Combined with water treatment</li>
+                </ul>
+                <p><strong>Key Lessons:</strong> Demonstrates multi-purpose infrastructure and integration with environmental remediation.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>🌊 Optimal Site Characteristics</h3>
+                    <ul>
+                        <li><strong>Tidal range:</strong> > 3 meters for barrages</li>
+                        <li><strong>Current speed:</strong> > 2 m/s for stream turbines</li>
+                        <li><strong>Water depth:</strong> 20-40 meters ideal</li>
+                        <li><strong>Seabed:</strong> Stable, suitable for foundations</li>
+                        <li><strong>Grid access:</strong> Proximity to transmission infrastructure</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🐟 Environmental Considerations</h3>
+                    <ul>
+                        <li><strong>Marine life:</strong> Fish migration patterns</li>
+                        <li><strong>Sediment transport:</strong> Coastal erosion/deposition</li>
+                        <li><strong>Water quality:</strong> Mixing and circulation</li>
+                        <li><strong>Noise impact:</strong> Marine mammal communication</li>
+                        <li><strong>Visual impact:</strong> Coastal aesthetics</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>🔧 Technical Challenges</h3>
+                    <ul>
+                        <li><strong>Corrosion:</strong> Saltwater environment</li>
+                        <li><strong>Biofouling:</strong> Marine growth on structures</li>
+                        <li><strong>Maintenance:</strong> Underwater accessibility</li>
+                        <li><strong>Grid integration:</strong> Variable but predictable output</li>
+                        <li><strong>Extreme weather:</strong> Storm resistance</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>📋 Regulatory Framework</h3>
+                    <ul>
+                        <li><strong>Environmental permits:</strong> Impact assessments</li>
+                        <li><strong>Marine licenses:</strong> Seabed rights</li>
+                        <li><strong>Grid connection:</strong> Transmission agreements</li>
+                        <li><strong>Subsidies:</strong> Renewable energy incentives</li>
+                        <li><strong>International waters:</strong> Cross-border considerations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Knowledge Check -->
+        <div id="assessment" class="lesson-section">
+            <h2 class="section-title">✅ Knowledge Assessment</h2>
+
+            <div class="quiz-container">
+                <div class="quiz-question">1. What causes the two daily high tides on Earth?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Earth's rotation speed variations</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">B) Solar heating of the oceans</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">C) Two tidal bulges caused by Moon's gravity and centrifugal force</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) Underwater volcanic activity</div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">2. Which tidal energy technology has the highest capacity factor?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Tidal lagoons</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">B) Tidal barrages</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">C) Floating tidal platforms</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) Wave energy converters</div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">3. What is the minimum tidal range typically required for economical tidal barrage projects?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) 1 meter</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">B) 2 meters</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">C) 3 meters</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) 5 meters</div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">4. Spring tides occur when:</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Only during spring season</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">B) Sun and Moon are aligned</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">C) Moon is at its farthest from Earth</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) Ocean temperatures are highest</div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">5. The main advantage of tidal energy over wind and solar is:</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">A) Lower installation costs</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, true)">B) Predictable and reliable generation</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">C) Higher energy density</div>
+                    <div class="quiz-option" onclick="selectAnswer(this, false)">D) No environmental impact</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎓 Lesson Summary</h3>
+                <p>You've completed the comprehensive tidal energy training module! Key takeaways:</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Tidal forces result from gravitational interactions between Earth, Moon, and Sun</li>
+                    <li>Multiple technologies exist: stream turbines, barrages, and lagoons</li>
+                    <li>Energy calculations depend on tidal range, area, and system efficiency</li>
+                    <li>Real-world projects demonstrate both potential and challenges</li>
+                    <li>Predictability makes tidal energy uniquely valuable among renewables</li>
+                </ul>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>📊 Final Assessment Score</h3>
+                <div id="finalScore" style="font-size: 1.5em; margin: 20px 0;">Complete all questions to see your score</div>
+                <button class="demo-button" onclick="generateCertificate()" id="certButton" style="display: none;">🏆 Generate Certificate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'physics';
+        let quizAnswers = {};
+        let questionsAnswered = 0;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.lesson-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update progress bar
+            const sections = ['physics', 'technology', 'calculation', 'applications', 'assessment'];
+            const progress = ((sections.indexOf(sectionId) + 1) / sections.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            currentSection = sectionId;
+        }
+
+        function showTechRecommendation(siteType) {
+            const recommendations = {
+                'strong-current': {
+                    tech: 'Tidal Stream Generators',
+                    reason: 'Ideal for sites with current speeds > 2 m/s. Deploy underwater turbines in arrays for maximum efficiency. Lower environmental impact and good scalability.'
+                },
+                'large-tidal-range': {
+                    tech: 'Tidal Barrage',
+                    reason: 'Best for locations with tidal range > 5m. High capacity factor and proven technology. Consider environmental impact on estuary ecosystems.'
+                },
+                'moderate-conditions': {
+                    tech: 'Tidal Lagoon',
+                    reason: 'Suitable for moderate tidal ranges (3-4m). Good balance of efficiency and environmental consideration. Emerging technology with promising potential.'
+                }
+            };
+            
+            const rec = recommendations[siteType];
+            document.getElementById('recommendationText').innerHTML = 
+                `<strong>Recommended: ${rec.tech}</strong><br>${rec.reason}`;
+            document.getElementById('techRecommendation').style.display = 'block';
+        }
+
+        function calculateTidalEnergy() {
+            const range = parseFloat(document.getElementById('tidalRange').value);
+            const area = parseFloat(document.getElementById('basinArea').value) * 1e6; // Convert km² to m²
+            const efficiency = parseFloat(document.getElementById('efficiency').value) / 100;
+            
+            // Calculate potential energy per cycle: E = 0.5 * ρ * g * A * R²
+            const waterDensity = 1025; // kg/m³
+            const gravity = 9.81; // m/s²
+            
+            const energyPerCycleJoules = 0.5 * waterDensity * gravity * area * Math.pow(range, 2);
+            const energyPerCycleMWh = (energyPerCycleJoules * efficiency) / (3.6e9); // Convert to MWh
+            
+            // Daily energy (approximately 2 cycles per day)
+            const dailyEnergyMWh = energyPerCycleMWh * 2;
+            
+            // Annual energy
+            const annualEnergyGWh = (dailyEnergyMWh * 365) / 1000;
+            
+            // Equivalent homes (assuming 10 MWh per home per year)
+            const homesPowered = Math.round(annualEnergyGWh * 100);
+            
+            // Update display
+            document.getElementById('energyPerCycle').textContent = energyPerCycleMWh.toFixed(1);
+            document.getElementById('dailyEnergy').textContent = dailyEnergyMWh.toFixed(1);
+            document.getElementById('annualEnergy').textContent = annualEnergyGWh.toFixed(2);
+            document.getElementById('homesPowered').textContent = homesPowered.toLocaleString();
+        }
+
+        function selectAnswer(element, isCorrect) {
+            // Prevent re-selection
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+            
+            // Find the question container
+            const questionContainer = element.closest('.quiz-container');
+            const questionNumber = questionContainer.querySelector('.quiz-question').textContent.charAt(0);
+            
+            // Disable all options in this question
+            const allOptions = questionContainer.querySelectorAll('.quiz-option');
+            allOptions.forEach(option => {
+                if (option === element) {
+                    option.classList.add(isCorrect ? 'correct' : 'incorrect');
+                } else {
+                    option.style.opacity = '0.5';
+                    option.style.pointerEvents = 'none';
+                }
+            });
+            
+            // Track answer
+            if (!quizAnswers[questionNumber]) {
+                questionsAnswered++;
+                quizAnswers[questionNumber] = isCorrect;
+                
+                // Check if all questions answered
+                if (questionsAnswered === 5) {
+                    updateFinalScore();
+                }
+            }
+        }
+
+        function updateFinalScore() {
+            const correctAnswers = Object.values(quizAnswers).filter(answer => answer).length;
+            const percentage = Math.round((correctAnswers / 5) * 100);
+            
+            let message = `Score: ${correctAnswers}/5 (${percentage}%)`;
+            let emoji = '📊';
+            
+            if (percentage >= 90) {
+                message += ' - Excellent! 🌟';
+                emoji = '🌟';
+            } else if (percentage >= 70) {
+                message += ' - Good work! 👍';
+                emoji = '👍';
+            } else if (percentage >= 50) {
+                message += ' - Room for improvement 📚';
+                emoji = '📚';
+            } else {
+                message += ' - Review the material 🔄';
+                emoji = '🔄';
+            }
+            
+            document.getElementById('finalScore').innerHTML = emoji + ' ' + message;
+            
+            if (percentage >= 70) {
+                document.getElementById('certButton').style.display = 'inline-block';
+            }
+        }
+
+        function generateCertificate() {
+            const correctAnswers = Object.values(quizAnswers).filter(answer => answer).length;
+            const percentage = Math.round((correctAnswers / 5) * 100);
+            
+            alert(`🏆 Certificate of Completion\n\nTidal Energy Training Course\n\nScore: ${correctAnswers}/5 (${percentage}%)\n\nYou have successfully completed the comprehensive training on tidal energy harvesting from physics fundamentals to real-world applications!\n\n${new Date().toLocaleDateString()}`);
+        }
+
+        // Initialize calculator on page load
+        window.addEventListener('load', function() {
+            calculateTidalEnergy();
+            
+            // Add some animation to the progress bar
+            setTimeout(() => {
+                document.getElementById('progressFill').style.transition = 'width 0.5s ease';
+            }, 100);
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const sections = ['physics', 'technology', 'calculation', 'applications', 'assessment'];
+            const currentIndex = sections.indexOf(currentSection);
+            
+            if (e.key === 'ArrowRight' && currentIndex < sections.length - 1) {
+                const nextSection = sections[currentIndex + 1];
+                const nextButton = document.querySelector(`[onclick="showSection('${nextSection}')"]`);
+                nextButton.click();
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const prevSection = sections[currentIndex - 1];
+                const prevButton = document.querySelector(`[onclick="showSection('${prevSection}')"]`);
+                prevButton.click();
+            }
+        });
+
+        // Add smooth scrolling for better UX
+        function smoothScrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Auto-scroll to top when changing sections
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', smoothScrollToTop);
+        });
+
+        // Tidal Simulation Implementation
+        class EmbeddedTidalSimulation {
+            constructor() {
+                this.canvas = document.getElementById('tidalSimCanvas');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.isPlaying = false;
+                this.animationSpeed = 1;
+                this.time = 0;
+                this.earthRotation = 0;
+                this.moonAngle = 0;
+                this.showDetailedView = false;
+                
+                // Simulation parameters
+                this.earthRadius = 60;
+                this.moonDistance = 180;
+                this.moonRadius = 15;
+                this.tidalBulgeHeight = 18;
+                
+                this.setupEventListeners();
+                this.render();
+            }
+
+            setupEventListeners() {
+                const playBtn = document.getElementById('simPlayPause');
+                const resetBtn = document.getElementById('simReset');
+                const toggleBtn = document.getElementById('simToggleView');
+                const speedSlider = document.getElementById('simSpeed');
+                
+                if (playBtn) playBtn.addEventListener('click', () => this.togglePlayPause());
+                if (resetBtn) resetBtn.addEventListener('click', () => this.reset());
+                if (toggleBtn) toggleBtn.addEventListener('click', () => this.toggleView());
+                if (speedSlider) {
+                    speedSlider.addEventListener('input', (e) => {
+                        this.animationSpeed = parseFloat(e.target.value);
+                        const label = document.getElementById('simSpeedLabel');
+                        if (label) label.textContent = `${this.animationSpeed}x`;
+                    });
+                }
+            }
+
+            togglePlayPause() {
+                this.isPlaying = !this.isPlaying;
+                const btn = document.getElementById('simPlayPause');
+                if (btn) {
+                    if (this.isPlaying) {
+                        btn.textContent = '⏸️ Pause';
+                        this.animate();
+                    } else {
+                        btn.textContent = '▶️ Play';
+                    }
+                }
+            }
+
+            reset() {
+                this.time = 0;
+                this.earthRotation = 0;
+                this.moonAngle = 0;
+                this.render();
+            }
+
+            toggleView() {
+                this.showDetailedView = !this.showDetailedView;
+                const btn = document.getElementById('simToggleView');
+                if (btn) {
+                    btn.textContent = this.showDetailedView ? '🌍 Simple View' : '🔬 Detail View';
+                }
+            }
+
+            animate() {
+                if (!this.isPlaying) return;
+                
+                this.time += 0.02 * this.animationSpeed;
+                this.earthRotation += 0.1 * this.animationSpeed;
+                this.moonAngle += 0.004 * this.animationSpeed;
+                
+                this.render();
+                this.updateTideStatus();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+
+            render() {
+                if (!this.canvas) return;
+                
+                const { width, height } = this.canvas;
+                this.ctx.clearRect(0, 0, width, height);
+                
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                this.ctx.save();
+                this.ctx.translate(centerX, centerY);
+                
+                // Draw orbital path
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.3)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([3, 3]);
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.moonDistance, 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+
+                // Calculate moon position
+                const moonX = Math.cos(this.moonAngle) * this.moonDistance;
+                const moonY = Math.sin(this.moonAngle) * this.moonDistance;
+
+                // Draw Earth with tidal bulges
+                this.drawEarthWithTides(moonX, moonY);
+                
+                // Draw Moon
+                this.drawMoon(moonX, moonY);
+                
+                // Draw gravitational force lines
+                this.drawGravitationalLines(moonX, moonY);
+                
+                // Draw labels
+                this.drawLabels(moonX, moonY);
+                
+                this.ctx.restore();
+            }
+
+            drawEarthWithTides(moonX, moonY) {
+                const angleToMoon = Math.atan2(moonY, moonX);
+                
+                // Draw Earth core
+                this.ctx.fillStyle = '#4a90e2';
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius - 8, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Draw continents
+                this.ctx.fillStyle = '#2d5a0d';
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * Math.PI * 2 / 5) + this.earthRotation;
+                    const x = Math.cos(angle) * (this.earthRadius - 12);
+                    const y = Math.sin(angle) * (this.earthRadius - 12);
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+                
+                // Draw tidal bulges
+                this.drawTidalBulges(angleToMoon);
+                
+                // Draw Earth's rotation indicator
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius + 3, 0, this.earthRotation % (Math.PI * 2));
+                this.ctx.stroke();
+            }
+
+            drawTidalBulges(moonAngle) {
+                // Near-side bulge (toward moon)
+                const bulge1X = Math.cos(moonAngle) * (this.earthRadius + this.tidalBulgeHeight);
+                const bulge1Y = Math.sin(moonAngle) * (this.earthRadius + this.tidalBulgeHeight);
+                
+                // Far-side bulge (opposite moon)
+                const bulge2X = Math.cos(moonAngle + Math.PI) * (this.earthRadius + this.tidalBulgeHeight);
+                const bulge2Y = Math.sin(moonAngle + Math.PI) * (this.earthRadius + this.tidalBulgeHeight);
+                
+                // Draw water bulges
+                this.ctx.fillStyle = 'rgba(135, 206, 235, 0.7)';
+                
+                // Near bulge
+                this.ctx.beginPath();
+                this.ctx.arc(bulge1X * 0.6, bulge1Y * 0.6, 12, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Far bulge
+                this.ctx.beginPath();
+                this.ctx.arc(bulge2X * 0.6, bulge2Y * 0.6, 12, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Draw Earth's water layer
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.5)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius, 0, Math.PI * 2);
+                this.ctx.stroke();
+            }
+
+            drawMoon(x, y) {
+                // Moon glow
+                const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.moonRadius + 8);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                this.ctx.fillStyle = gradient;
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius + 8, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon surface
+                this.ctx.fillStyle = '#e8e8e8';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon craters
+                this.ctx.fillStyle = '#d0d0d0';
+                this.ctx.beginPath();
+                this.ctx.arc(x - 4, y - 2, 2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(x + 2, y + 3, 1.5, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+
+            drawGravitationalLines(moonX, moonY) {
+                if (!this.showDetailedView) return;
+                
+                this.ctx.strokeStyle = 'rgba(255, 255, 100, 0.4)';
+                this.ctx.lineWidth = 1;
+                this.ctx.setLineDash([2, 2]);
+                
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI / 3);
+                    const earthX = Math.cos(angle) * this.earthRadius;
+                    const earthY = Math.sin(angle) * this.earthRadius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(moonX, moonY);
+                    this.ctx.lineTo(earthX, earthY);
+                    this.ctx.stroke();
+                }
+                this.ctx.setLineDash([]);
+            }
+
+            drawLabels(moonX, moonY) {
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = 'bold 12px sans-serif';
+                this.ctx.textAlign = 'center';
+                
+                // Earth label
+                this.ctx.fillText('🌍 Earth', 0, -this.earthRadius - 25);
+                
+                // Moon label
+                this.ctx.fillText('🌙 Moon', moonX, moonY - 25);
+                
+                // Tide labels
+                this.ctx.font = '10px sans-serif';
+                this.ctx.fillStyle = '#87ceeb';
+                const tideAngle = Math.atan2(moonY, moonX);
+                const highTideX = Math.cos(tideAngle) * (this.earthRadius + 30);
+                const highTideY = Math.sin(tideAngle) * (this.earthRadius + 30);
+                this.ctx.fillText('High Tide', highTideX, highTideY);
+                
+                const lowTideX = Math.cos(tideAngle + Math.PI/2) * (this.earthRadius + 30);
+                const lowTideY = Math.sin(tideAngle + Math.PI/2) * (this.earthRadius + 30);
+                this.ctx.fillText('Low Tide', lowTideX, lowTideY);
+            }
+
+            updateTideStatus() {
+                const phase = (this.earthRotation % (Math.PI * 2)) / (Math.PI * 2);
+                
+                const highStatus = document.getElementById('highTideStatus');
+                const lowStatus = document.getElementById('lowTideStatus');
+                
+                if (highStatus && lowStatus) {
+                    if (phase < 0.25 || phase > 0.75) {
+                        highStatus.textContent = '🌊 High tide now!';
+                        lowStatus.textContent = '🏖️ Low tide in 6 hours';
+                    } else {
+                        highStatus.textContent = '🌊 High tide in 6 hours';
+                        lowStatus.textContent = '🏖️ Low tide now!';
+                    }
+                }
+            }
+        }
+
+        // Initialize embedded tidal simulation when page loads
+        let embeddedSim;
+        window.addEventListener('load', function() {
+            embeddedSim = new EmbeddedTidalSimulation();
+        });
+    </script>
+</body>
+</html>

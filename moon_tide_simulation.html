@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon-Earth Tidal Simulation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #2d2d5f 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #87ceeb;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #b8c6db;
+            font-style: italic;
+        }
+
+        .simulation-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(135, 206, 235, 0.2);
+            border: 1px solid rgba(135, 206, 235, 0.3);
+        }
+
+        canvas {
+            border: 2px solid #87ceeb;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            background: radial-gradient(circle at center, #001122 0%, #000811 100%);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #4a90e2, #87ceeb);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.active {
+            background: linear-gradient(45deg, #e24a90, #eb87ce);
+            box-shadow: 0 4px 15px rgba(226, 74, 144, 0.3);
+        }
+
+        input[type="range"] {
+            width: 150px;
+            margin: 0 10px;
+        }
+
+        .info-panel {
+            background: rgba(135, 206, 235, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #87ceeb;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(135, 206, 235, 0.2);
+        }
+
+        .info-card h3 {
+            color: #87ceeb;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+
+        .tide-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .tide-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .high-tide {
+            border-color: #4a90e2;
+            color: #87ceeb;
+        }
+
+        .low-tide {
+            border-color: #e24a90;
+            color: #eb87ce;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                gap: 10px;
+            }
+            
+            .control-group {
+                gap: 5px;
+            }
+            
+            button {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 Moon-Earth Tidal Simulation</h1>
+        <p class="subtitle">Interactive visualization of how the Moon's gravity creates tides on Earth</p>
+
+        <div class="simulation-container">
+            <canvas id="simulationCanvas" width="800" height="600"></canvas>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <button id="playPauseBtn" class="active">▶️ Play</button>
+                </div>
+                <div class="control-group">
+                    <label>Speed:</label>
+                    <input type="range" id="speedSlider" min="0.1" max="5" value="1" step="0.1">
+                    <span id="speedValue">1x</span>
+                </div>
+                <div class="control-group">
+                    <button id="resetBtn">🔄 Reset</button>
+                </div>
+                <div class="control-group">
+                    <button id="toggleMode">🔬 Toggle View</button>
+                </div>
+            </div>
+
+            <div class="tide-indicator">
+                <div class="tide-box high-tide">
+                    <strong>High Tide</strong><br>
+                    <span id="highTideTime">🌊 Moon overhead</span>
+                </div>
+                <div class="tide-box low-tide">
+                    <strong>Low Tide</strong><br>
+                    <span id="lowTideTime">🏖️ Moon at horizon</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h2>🌊 How Tidal Forces Work</h2>
+            <p>This simulation shows how the Moon's gravitational pull creates two tidal bulges on Earth - one facing the Moon and one on the opposite side. As Earth rotates, different locations experience high and low tides.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🎯 Gravitational Pull</h3>
+                    <p>The Moon pulls more strongly on the side of Earth facing it, creating a bulge of water toward the Moon.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 Opposite Bulge</h3>
+                    <p>The far side of Earth experiences less gravitational pull, allowing water to bulge outward due to centrifugal force.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌍 Earth's Rotation</h3>
+                    <p>As Earth rotates every 24 hours, locations move through both tidal bulges, experiencing two high tides daily.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🕒 Tidal Timing</h3>
+                    <p>The Moon rises about 50 minutes later each day, so tides also shift by about 50 minutes daily.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TidalSimulation {
+            constructor() {
+                this.canvas = document.getElementById('simulationCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.isPlaying = false;
+                this.animationSpeed = 1;
+                this.time = 0;
+                this.earthRotation = 0;
+                this.moonAngle = 0;
+                this.showDetailedView = false;
+                
+                // Simulation parameters
+                this.earthRadius = 80;
+                this.moonDistance = 250;
+                this.moonRadius = 20;
+                this.tidalBulgeHeight = 25;
+                
+                this.setupEventListeners();
+                this.render();
+            }
+
+            setupEventListeners() {
+                document.getElementById('playPauseBtn').addEventListener('click', () => this.togglePlayPause());
+                document.getElementById('resetBtn').addEventListener('click', () => this.reset());
+                document.getElementById('toggleMode').addEventListener('click', () => this.toggleView());
+                
+                const speedSlider = document.getElementById('speedSlider');
+                speedSlider.addEventListener('input', (e) => {
+                    this.animationSpeed = parseFloat(e.target.value);
+                    document.getElementById('speedValue').textContent = `${this.animationSpeed}x`;
+                });
+            }
+
+            togglePlayPause() {
+                this.isPlaying = !this.isPlaying;
+                const btn = document.getElementById('playPauseBtn');
+                if (this.isPlaying) {
+                    btn.textContent = '⏸️ Pause';
+                    btn.classList.remove('active');
+                    this.animate();
+                } else {
+                    btn.textContent = '▶️ Play';
+                    btn.classList.add('active');
+                }
+            }
+
+            reset() {
+                this.time = 0;
+                this.earthRotation = 0;
+                this.moonAngle = 0;
+                this.render();
+            }
+
+            toggleView() {
+                this.showDetailedView = !this.showDetailedView;
+                const btn = document.getElementById('toggleMode');
+                btn.textContent = this.showDetailedView ? '🌍 Simple View' : '🔬 Detailed View';
+            }
+
+            animate() {
+                if (!this.isPlaying) return;
+                
+                this.time += 0.02 * this.animationSpeed;
+                this.earthRotation += 0.1 * this.animationSpeed; // Earth rotates faster than moon orbits
+                this.moonAngle += 0.004 * this.animationSpeed; // Moon's orbital motion
+                
+                this.render();
+                this.updateTideInfo();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+
+            render() {
+                const { width, height } = this.canvas;
+                this.ctx.clearRect(0, 0, width, height);
+                
+                // Center everything
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                this.ctx.save();
+                this.ctx.translate(centerX, centerY);
+                
+                if (this.showDetailedView) {
+                    this.renderDetailedView();
+                } else {
+                    this.renderSimpleView();
+                }
+                
+                this.ctx.restore();
+            }
+
+            renderSimpleView() {
+                // Draw orbital path
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.3)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([5, 5]);
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.moonDistance, 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+
+                // Calculate moon position
+                const moonX = Math.cos(this.moonAngle) * this.moonDistance;
+                const moonY = Math.sin(this.moonAngle) * this.moonDistance;
+
+                // Draw Earth with tidal bulges
+                this.drawEarthWithTides(moonX, moonY);
+                
+                // Draw Moon
+                this.drawMoon(moonX, moonY);
+                
+                // Draw gravitational force lines
+                this.drawGravitationalLines(moonX, moonY);
+                
+                // Draw labels
+                this.drawLabels();
+            }
+
+            renderDetailedView() {
+                // Similar to simple view but with additional details
+                this.renderSimpleView();
+                
+                // Add velocity vectors
+                this.drawVelocityVectors();
+                
+                // Add force magnitude indicators
+                this.drawForceMagnitudes();
+            }
+
+            drawEarthWithTides(moonX, moonY) {
+                const angleToMoon = Math.atan2(moonY, moonX);
+                
+                // Draw Earth core
+                this.ctx.fillStyle = '#4a90e2';
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius - 10, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Draw continents
+                this.ctx.fillStyle = '#2d5a0d';
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI / 3) + this.earthRotation;
+                    const x = Math.cos(angle) * (this.earthRadius - 15);
+                    const y = Math.sin(angle) * (this.earthRadius - 15);
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 8, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+                
+                // Draw tidal bulges
+                this.drawTidalBulges(angleToMoon);
+                
+                // Draw rotation indicator
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius + 5, 0, this.earthRotation % (Math.PI * 2));
+                this.ctx.stroke();
+            }
+
+            drawTidalBulges(moonAngle) {
+                // Near-side bulge (toward moon)
+                const bulge1X = Math.cos(moonAngle) * (this.earthRadius + this.tidalBulgeHeight);
+                const bulge1Y = Math.sin(moonAngle) * (this.earthRadius + this.tidalBulgeHeight);
+                
+                // Far-side bulge (opposite moon)
+                const bulge2X = Math.cos(moonAngle + Math.PI) * (this.earthRadius + this.tidalBulgeHeight);
+                const bulge2Y = Math.sin(moonAngle + Math.PI) * (this.earthRadius + this.tidalBulgeHeight);
+                
+                // Draw water bulges
+                this.ctx.fillStyle = 'rgba(135, 206, 235, 0.8)';
+                
+                // Near bulge
+                this.ctx.beginPath();
+                this.ctx.arc(bulge1X * 0.7, bulge1Y * 0.7, 15, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Far bulge
+                this.ctx.beginPath();
+                this.ctx.arc(bulge2X * 0.7, bulge2Y * 0.7, 15, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Draw Earth's water layer
+                this.ctx.strokeStyle = 'rgba(135, 206, 235, 0.6)';
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, this.earthRadius, 0, Math.PI * 2);
+                this.ctx.stroke();
+            }
+
+            drawMoon(x, y) {
+                // Moon glow
+                const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.moonRadius + 10);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                this.ctx.fillStyle = gradient;
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius + 10, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon surface
+                this.ctx.fillStyle = '#e8e8e8';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, this.moonRadius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Moon craters
+                this.ctx.fillStyle = '#d0d0d0';
+                this.ctx.beginPath();
+                this.ctx.arc(x - 5, y - 3, 3, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(x + 3, y + 4, 2, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+
+            drawGravitationalLines(moonX, moonY) {
+                // Draw force lines from moon to Earth
+                this.ctx.strokeStyle = 'rgba(255, 255, 100, 0.6)';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([3, 3]);
+                
+                for (let i = 0; i < 8; i++) {
+                    const angle = (i * Math.PI / 4);
+                    const earthX = Math.cos(angle) * this.earthRadius;
+                    const earthY = Math.sin(angle) * this.earthRadius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(moonX, moonY);
+                    this.ctx.lineTo(earthX, earthY);
+                    this.ctx.stroke();
+                }
+                this.ctx.setLineDash([]);
+            }
+
+            drawVelocityVectors() {
+                if (!this.showDetailedView) return;
+                
+                // Earth's rotational velocity
+                this.ctx.strokeStyle = '#ff6b6b';
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, -this.earthRadius - 20);
+                this.ctx.lineTo(20, -this.earthRadius - 20);
+                this.ctx.stroke();
+                
+                // Add arrowhead
+                this.ctx.beginPath();
+                this.ctx.moveTo(20, -this.earthRadius - 20);
+                this.ctx.lineTo(15, -this.earthRadius - 25);
+                this.ctx.moveTo(20, -this.earthRadius - 20);
+                this.ctx.lineTo(15, -this.earthRadius - 15);
+                this.ctx.stroke();
+            }
+
+            drawForceMagnitudes() {
+                if (!this.showDetailedView) return;
+                
+                // Force magnitude indicators
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                this.ctx.font = '12px monospace';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('Strong Force', this.moonDistance * 0.3, -20);
+                this.ctx.fillText('Weak Force', -this.moonDistance * 0.3, -20);
+            }
+
+            drawLabels() {
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = 'bold 16px sans-serif';
+                this.ctx.textAlign = 'center';
+                
+                // Earth label
+                this.ctx.fillText('🌍 Earth', 0, -this.earthRadius - 40);
+                
+                // Moon label
+                const moonX = Math.cos(this.moonAngle) * this.moonDistance;
+                const moonY = Math.sin(this.moonAngle) * this.moonDistance;
+                this.ctx.fillText('🌙 Moon', moonX, moonY - 35);
+                
+                // Tide labels
+                this.ctx.font = '12px sans-serif';
+                this.ctx.fillStyle = '#87ceeb';
+                const tideAngle = Math.atan2(moonY, moonX);
+                const highTideX = Math.cos(tideAngle) * (this.earthRadius + 40);
+                const highTideY = Math.sin(tideAngle) * (this.earthRadius + 40);
+                this.ctx.fillText('High Tide', highTideX, highTideY);
+                
+                const lowTideX = Math.cos(tideAngle + Math.PI/2) * (this.earthRadius + 40);
+                const lowTideY = Math.sin(tideAngle + Math.PI/2) * (this.earthRadius + 40);
+                this.ctx.fillText('Low Tide', lowTideX, lowTideY);
+            }
+
+            updateTideInfo() {
+                // Calculate current tide phase
+                const phase = (this.earthRotation % (Math.PI * 2)) / (Math.PI * 2);
+                const moonPhase = (this.moonAngle % (Math.PI * 2)) / (Math.PI * 2);
+                
+                // Update tide timing display
+                const highTideElement = document.getElementById('highTideTime');
+                const lowTideElement = document.getElementById('lowTideTime');
+                
+                if (phase < 0.25 || phase > 0.75) {
+                    highTideElement.textContent = '🌊 High tide now!';
+                    lowTideElement.textContent = '🏖️ Low tide in 6 hours';
+                } else {
+                    highTideElement.textContent = '🌊 High tide in 6 hours';
+                    lowTideElement.textContent = '🏖️ Low tide now!';
+                }
+            }
+        }
+
+        // Initialize simulation when page loads
+        window.addEventListener('load', () => {
+            new TidalSimulation();
+        });
+
+        // Handle canvas resizing
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('simulationCanvas');
+            const container = canvas.parentElement;
+            const maxWidth = Math.min(container.clientWidth - 40, 800);
+            const aspectRatio = 0.75;
+            
+            canvas.width = maxWidth;
+            canvas.height = maxWidth * aspectRatio;
+        });
+    </script>
+</body>
+</html>
