@@ -16,7 +16,7 @@ Knowledge assessments
 Offline capability
 
 ## Learning Modules 🎯
-###1. 🌊 Tidal Energy
+1. 🌊 Tidal Energy
 
 Physics of tidal forces
 Interactive Moon-Earth simulation
@@ -45,7 +45,7 @@ Environmental considerations
 Micro-hydro applications
 Large-scale dam projects
 
-🛠️ Technical Features
+## Technical Features 🛠️
 
 Completely self-contained - works offline after initial load
 Responsive design - works on desktop, tablet, and mobile
@@ -53,7 +53,7 @@ Progress tracking - automatically saves your progress
 Interactive simulations - visualize complex physics concepts
 Built-in calculators - perform real energy calculations
 
-🎓 Target Audience
+# Target Audience 🎓
 
 Engineering students
 Energy professionals
