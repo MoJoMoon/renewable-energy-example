@@ -53,28 +53,28 @@ Progress tracking - automatically saves your progress
 Interactive simulations - visualize complex physics concepts
 Built-in calculators - perform real energy calculations
 
-# Target Audience 🎓
+## Target Audience 🎓
 
 Engineering students
 Energy professionals
 Policy makers
 Anyone interested in renewable energy
 
-📖 Usage Instructions
+## Usage Instructions 📖
 
 Online: Simply visit the course URL above
 Offline: Download the HTML file and open in any web browser
 Self-paced: Complete modules in any order
 Progress: Your progress is automatically saved
 
-🔧 System Requirements
+## System Requirements 🔧
 
 Modern web browser (Chrome, Firefox, Safari, Edge)
 JavaScript enabled
 No additional software required
 Works completely offline
 
-📄 Course Content
+## Course Content 📄
 
 Estimated completion time: 4-6 hours
 Interactive simulations: 4+ physics demonstrations
@@ -82,7 +82,7 @@ Assessments: Knowledge checks for each module
 Calculations: Hands-on energy potential analysis
 Case studies: Real-world project examples
 
-🚀 Getting Started
+## Getting Started 🚀
 
 Click the course link above
 Start with the Course Overview
@@ -90,28 +90,28 @@ Progress through modules at your own pace
 Complete assessments to track learning
 Download completion certificate
 
-📧 Contact & Support
+## Contact & Support 📧
 
-Course Author: [Your Name]
-Email: [your-email@example.com]
+Course Author: Morgan Jones
+Email: morgan.jones@g-datalabs.com
 Issues: Report problems via GitHub Issues
 Updates: Watch this repository for course updates
 
-📊 Course Statistics
+## Course Statistics 📊
 
 Total Modules: 5 (1 complete, 4 in development)
 Interactive Elements: 10+ simulations and calculators
 Assessment Questions: 25+ knowledge checks
 Real-world Examples: 15+ case studies
 
-🔄 Updates & Versions
+## Updates & Versions 🔄
 
 v1.0 - Tidal energy module complete with interactive simulation
 v1.1 - Coming soon: Wind power module
 v1.2 - Coming soon: Solar energy module
 v1.3 - Coming soon: Hydroelectric module
 
-📋 License
+## License 📋
 This educational content is provided for learning purposes. Please contact the author for commercial use.
 
 ⭐ Star this repository if you find the course helpful!
