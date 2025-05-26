@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Renewable Energy Self Paced Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c2340 0%, #1e4a72 50%, #2d6da3 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .course-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(45, 109, 163, 0.5);
+        }
+
+        .course-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #87ceeb;
+            text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+        }
+
+        .course-subtitle {
+            font-size: 1.2em;
+            color: #b8c6db;
+            margin-bottom: 20px;
+        }
+
+        .progress-overview {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .progress-module {
+            background: rgba(74, 144, 226, 0.2);
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            padding: 10px 15px;
+            text-align: center;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-module:hover {
+            background: rgba(74, 144, 226, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .progress-module.completed {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+        }
+
+        .progress-module.current {
+            background: rgba(226, 74, 144, 0.3);
+            border-color: #e24a90;
+        }
+
+        .module-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .module-btn {
+            background: linear-gradient(45deg, #2d6da3, #4a90e2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            font-size: 14px;
+        }
+
+        .module-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .module-btn.active {
+            background: linear-gradient(45deg, #e24a90, #eb87ce);
+            box-shadow: 0 4px 15px rgba(226, 74, 144, 0.4);
+        }
+
+        .course-module {
+            display: none;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(135, 206, 235, 0.3);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .course-module.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-title {
+            color: #87ceeb;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.3);
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .lesson-btn {
+            background: linear-gradient(45deg, #2d6da3, #4a90e2);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            font-size: 13px;
+        }
+
+        .lesson-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .lesson-btn.active {
+            background: linear-gradient(45deg, #e24a90, #eb87ce);
+            box-shadow: 0 4px 15px rgba(226, 74, 144, 0.4);
+        }
+
+        .lesson-section {
+            display: none;
+            animation: slideIn 0.3s ease-in;
+        }
+
+        .lesson-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .content-card {
+            background: rgba(45, 109, 163, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4a90e2;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-card h3 {
+            color: #87ceeb;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .simulation-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #4a90e2;
+        }
+
+        .simulation-container canvas {
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            background: radial-gradient(circle at center, #001122 0%, #000811 100%);
+            display: block;
+            margin: 15px auto;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #4a90e2, #87ceeb);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(226, 74, 144, 0.2), rgba(235, 135, 206, 0.2));
+            border: 2px solid rgba(226, 74, 144, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .navigation-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .nav-control-btn {
+            background: linear-gradient(45deg, #4a90e2, #87ceeb);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .nav-control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .nav-control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .course-progress {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4a90e2, #87ceeb);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .course-info {
+            background: rgba(135, 206, 235, 0.1);
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .course-info h3 {
+            color: #87ceeb;
+            margin-bottom: 15px;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .module-card {
+            background: rgba(45, 109, 163, 0.2);
+            border: 2px solid #4a90e2;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+            background: rgba(45, 109, 163, 0.3);
+        }
+
+        .module-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .module-card h3 {
+            color: #87ceeb;
+            margin-bottom: 10px;
+        }
+
+        .completion-status {
+            margin-top: 15px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .status-not-started {
+            background: rgba(108, 117, 125, 0.3);
+            color: #6c757d;
+        }
+
+        .status-in-progress {
+            background: rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        @media (max-width: 768px) {
+            .course-header h1 {
+                font-size: 2em;
+            }
+            
+            .module-selector, .lesson-nav {
+                gap: 8px;
+            }
+            
+            .module-btn, .lesson-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Offline indicator */
+        .offline-ready {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(40, 167, 69, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-ready">📱 Works Offline</div>
+    
+    <div class="course-container">
+        <!-- Course Header -->
+        <div class="course-header">
+            <h1>🌱 Example Renewable Energy Self Paced Course</h1>
+            <div class="course-subtitle">Complete Self-Paced Learning Platform</div>
+            
+            <div class="course-progress">
+                <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+            </div>
+            
+            <div class="progress-overview">
+                <div class="progress-module" id="tidal-progress" onclick="showModule('tidal')">
+                    <div>🌊 Tidal Energy</div>
+                    <small>0/5 Complete</small>
+                </div>
+                <div class="progress-module" id="wind-progress" onclick="showModule('wind')">
+                    <div>💨 Wind Power</div>
+                    <small>0/4 Complete</small>
+                </div>
+                <div class="progress-module" id="solar-progress" onclick="showModule('solar')">
+                    <div>☀️ Solar Energy</div>
+                    <small>0/4 Complete</small>
+                </div>
+                <div class="progress-module" id="hydro-progress" onclick="showModule('hydro')">
+                    <div>⚡ Hydroelectric</div>
+                    <small>0/3 Complete</small>
+                </div>
+                <div class="progress-module" id="final-progress" onclick="showModule('final')">
+                    <div>🎓 Final Assessment</div>
+                    <small>Not Started</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Overview Module -->
+        <div id="overview-module" class="course-module active">
+            <h2 class="module-title">🏠 Course Overview</h2>
+            
+            <div class="course-info">
+                <h3>Welcome to Example Renewable Energy Self Paced Course!</h3>
+                <p>This comprehensive course covers four major renewable energy technologies with interactive simulations, real-world examples, and practical calculations. Each module builds upon previous knowledge to give you a complete understanding of clean energy systems.</p>
+            </div>
+
+            <div class="module-grid">
+                <div class="module-card" onclick="showModule('tidal')">
+                    <div class="module-icon">🌊</div>
+                    <h3>Tidal Energy</h3>
+                    <p>Learn how moon and sun gravitational forces create predictable tidal energy. Includes interactive physics simulation.</p>
+                    <div class="completion-status status-not-started" id="tidal-status">Not Started</div>
+                </div>
+
+                <div class="module-card" onclick="showModule('wind')">
+                    <div class="module-icon">💨</div>
+                    <h3>Wind Power</h3>
+                    <p>Explore wind turbine technology, wind patterns, and large-scale wind farm development.</p>
+                    <div class="completion-status status-not-started" id="wind-status">Not Started</div>
+                </div>
+
+                <div class="module-card" onclick="showModule('solar')">
+                    <div class="module-icon">☀️</div>
+                    <h3>Solar Energy</h3>
+                    <p>Understand photovoltaic technology, solar thermal systems, and energy storage solutions.</p>
+                    <div class="completion-status status-not-started" id="solar-status">Not Started</div>
+                </div>
+
+                <div class="module-card" onclick="showModule('hydro')">
+                    <div class="module-icon">⚡</div>
+                    <h3>Hydroelectric Power</h3>
+                    <p>Discover how flowing water generates electricity from micro-hydro to massive dam systems.</p>
+                    <div class="completion-status status-not-started" id="hydro-status">Not Started</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Learning Objectives</h3>
+                <p>By completing this course, you will understand the physics, technology, economics, and environmental impact of major renewable energy systems. You'll be able to evaluate energy potential, compare technologies, and make informed decisions about clean energy implementation.</p>
+            </div>
+
+            <div class="course-info">
+                <h3>📋 Course Features</h3>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>🎮 Interactive simulations and calculators</li>
+                    <li>📊 Real-world case studies and data</li>
+                    <li>🧮 Hands-on energy calculations</li>
+                    <li>✅ Knowledge assessments</li>
+                    <li>📱 Works completely offline</li>
+                    <li>💾 Automatic progress saving</li>
+                    <li>🏆 Completion certificates</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tidal Energy Module -->
+        <div id="tidal-module" class="course-module">
+            <h2 class="module-title">🌊 Tidal Energy Systems</h2>
+            
+            <div class="lesson-nav">
+                <button class="lesson-btn active" onclick="showTidalSection('physics')">1. Physics</button>
+                <button class="lesson-btn" onclick="showTidalSection('technology')">2. Technology</button>
+                <button class="lesson-btn" onclick="showTidalSection('calculations')">3. Calculations</button>
+                <button class="lesson-btn" onclick="showTidalSection('applications')">4. Applications</button>
+                <button class="lesson-btn" onclick="showTidalSection('assessment')">5. Assessment</button>
+            </div>
+
+            <!-- Tidal Physics Section -->
+            <div id="tidal-physics" class="lesson-section active">
+                <h3 style="color: #87ceeb; font-size: 1.8em; margin-bottom: 20px;">🌙 Understanding Tidal Physics</h3>
+                
+                <div class="simulation-container">
+                    <h4>Interactive Tidal Force Simulation</h4>
+                    <p>Watch how the Moon's gravity creates two tidal bulges on Earth, leading to predictable energy cycles:</p>
+                    <canvas id="tidalCanvas" width="600" height="400"></canvas>
+                    <div class="demo-controls">
+                        <button class="demo-button" id="tidalPlay">▶️ Play</button>
+                        <button class="demo-button" id="tidalReset">🔄 Reset</button>
+                        <button class="demo-button" id="tidalToggle">🔬 Detail</button>
+                        <input type="range" id="tidalSpeed" min="0.1" max="3" value="1" step="0.1">
+                        <span id="tidalSpeedLabel">1x</span>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h3>🎯 Gravitational Forces</h3>
+                        <p>The Moon's gravity creates tidal forces that vary with the cube of distance (not square like regular gravity). This means tidal effects are much stronger on the near side of Earth.</p>
+                        <p><strong>Formula:</strong> Tidal Force ∝ M/r³</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>🔄 Dual Bulge System</h3>
+                        <p>Two water bulges exist simultaneously:</p>
+                        <ul>
+                            <li><strong>Near bulge:</strong> Moon's direct gravitational pull</li>
+                            <li><strong>Far bulge:</strong> Centrifugal force from Earth-Moon orbital motion</li>
+                        </ul>
+                        <p>This creates approximately two high tides every 24 hours and 50 minutes.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>🌍 Earth's Rotation</h3>
+                        <p>As Earth rotates beneath the tidal bulges, coastal locations experience:</p>
+                        <ul>
